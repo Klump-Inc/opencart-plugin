@@ -1,0 +1,46 @@
+services:
+    klump_opencart:
+        build: .
+        container_name: klump_opencart
+        restart: unless-stopped
+        command: bash -c "cat /my_cmd > /cmd.sh && chmod +x /cmd.sh && /cmd.sh"
+        networks:
+            - opencart_network
+        ports:
+            - 8080:80
+        depends_on:
+            - klump_mysql
+        volumes:
+            - htdocs:/var/www/html
+        environment:
+            APACHE_DOCUMENT_ROOT: /var/www/html
+            MYSQL_DATABASE: opencart
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_HOST: klump_mysql
+        configs:
+            - source: my_cmd
+
+    klump_mysql:
+        image: mysql:8.0
+        restart: unless-stopped
+        container_name: klump_mysql
+        networks:
+            - opencart_network
+        environment:
+            ALLOW_EMPTY_PASSWORD: 'yes'
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: opencart
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+        ports:
+            - 3306:3306
+volumes:
+    db_data:
+    htdocs:
+networks:
+    opencart_network:
+configs:
+    my_cmd:
+        file: ./cmd.sh
