@@ -1,0 +1,29 @@
+{{ header }}
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ heading_title }}</h3>
+        </div>
+        <div class="panel-body">
+            {% if error_warning %}
+                <div class="alert alert-danger alert-dismissible">{{ error_warning }}</div>
+            {% endif %}
+            <form action="{{ action }}" method="post">
+                <div class="form-group">
+                    <label class="control-label" for="input-status">{{ entry_status }}</label>
+                    <select name="payment_custompayment_status" id="input-status" class="form-control">
+                        <option value="1" {% if payment_custompayment_status %}selected="selected"{% endif %}>Enabled</option>
+                        <option value="0" {% if not payment_custompayment_status %}selected="selected"{% endif %}>Disabled</option>
+                    </select>
+                </div>
+                <div class="buttons clearfix">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary">{{ button_save }}</button>
+                        <a href="{{ cancel }}" class="btn btn-default">{{ button_cancel }}</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{ footer }}
