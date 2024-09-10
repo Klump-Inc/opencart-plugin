@@ -12,8 +12,8 @@
                 <div class="form-group">
                     <label class="control-label" for="input-status">{{ entry_status }}</label>
                     <select name="payment_custompayment_status" id="input-status" class="form-control">
-                        <option value="1" {% if payment_custompayment_status %}selected="selected"{% endif %}>Enabled</option>
-                        <option value="0" {% if not payment_custompayment_status %}selected="selected"{% endif %}>Disabled</option>
+                        <option value="1" {% if klump_status %}selected="selected"{% endif %}>Enabled</option>
+                        <option value="0" {% if not klump_status %}selected="selected"{% endif %}>Disabled</option>
                     </select>
                 </div>
                 <div class="buttons clearfix">

@@ -10,8 +10,9 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libcurl4-gnutls-dev \
     libicu-dev \
+	# php8.2-zip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd intl mbstring mysqli soap xml xsl zip pdo  fileinfo pdo_mysql \
+    && docker-php-ext-install -j$(nproc) gd intl mbstring mysqli soap xml xsl zip pdo fileinfo pdo_mysql \
     && a2enmod rewrite headers \
     && service apache2 restart
 
@@ -26,4 +27,5 @@ RUN apt-get install -y unzip \
     && rm -rf /var/www/html/opencart* \
     && cp /var/www/html/config-dist.php /var/www/html/config.php \
     && cp /var/www/html/admin/config-dist.php /var/www/html/admin/config.php \
-    && chown -R www-data:www-data /var/www/
+    && chown -R www-data:www-data /var/www/ \
+	&& cp /var/www/html/php.ini /usr/local/etc/php
