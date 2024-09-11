@@ -3,11 +3,10 @@ To run this project, you will need the latest version of [Docker](https://docker
 
 In the project directory, run `make rebuild` on your terminal and open `localhost:8080` on your browser. When asked for detals during installation, enter the following:
 ```
-MYSQL_DATABASE: opencart
-MYSQL_USER: user
-MYSQL_PASSWORD: password
-MYSQL_ROOT_PASSWORD: password
-MYSQL_HOST: klump_mysql
+USER: user
+DATABASE: opencart
+PASSWORD: password
+LOCALHOST: klump_mysql
 ```
 When setup and installations are completed, delete the `/install/` directory. You can do that by SSHing into the docker container via `ssh_opencart` and running `rm -rf install` within the container.
 

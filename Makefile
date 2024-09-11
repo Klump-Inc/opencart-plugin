@@ -7,7 +7,7 @@ start_with_logs:
 
 #Rebuild dashboard environment
 rebuild:
-	clear && docker compose down --remove-orphans  && docker compose rm && docker compose up --build -d --force-recreate && docker compose logs -f
+	clear && docker-compose build --no-cache && docker compose down --remove-orphans  && docker compose rm -f && docker compose up --build -d --force-recreate && docker compose logs -f
 
 ssh_opencart:
 	docker exec -it klump_opencart bash

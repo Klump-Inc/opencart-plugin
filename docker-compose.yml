@@ -3,7 +3,7 @@ services:
         build: .
         container_name: klump_opencart
         restart: unless-stopped
-        command: bash -c "cat /my_cmd > /cmd.sh && chmod +x /cmd.sh && /cmd.sh"
+        # command: bash -c "cat /my_cmd > /cmd.sh && chmod +x /cmd.sh && /cmd.sh"
         networks:
             - opencart_network
         ports:
@@ -19,8 +19,16 @@ services:
             MYSQL_PASSWORD: password
             MYSQL_ROOT_PASSWORD: password
             MYSQL_HOST: klump_mysql
-        configs:
-            - source: my_cmd
+        command: >
+            bash -c "if [ ! -f /var/www/html/install.lock ]; then
+                 wait-for-it mysql:3306 -t 60 &&
+                 cp config-dist.php config.php
+                 cp admin/config-dist.php admin/config.php
+                 php /var/www/html/install/cli_install.php install --username admin --password admin --email email@example.com --http_server http://localhost:8080/ --db_driver mysqli --db_hostname klump_mysql --db_username user --db_password password --db_database opencart --db_port 3306 --db_prefix oc_;
+                 touch /var/www/html/install.lock;
+               fi &&
+               apache2-foreground"
+
 
     klump_mysql:
         image: mysql:8.0
